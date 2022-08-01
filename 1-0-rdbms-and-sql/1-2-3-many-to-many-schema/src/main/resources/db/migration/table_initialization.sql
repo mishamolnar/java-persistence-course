@@ -25,3 +25,42 @@ A sales group can consists of more than one broker, while each broker can be ass
 */
 
 -- TODO: write SQL script to create a database tables according to the requirements
+
+CREATE TABLE broker(
+    id         BIGINT,
+    username   VARCHAR(255) NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name  VARCHAR(255) NOT NULL,
+    constraint PK_broker PRIMARY KEY (id),
+    CONSTRAINT UQ_broker_username UNIQUE (username)
+);
+
+CREATE TABLE sales_group(
+    id BIGINT,
+    name VARCHAR(255) NOT NULL,
+    transaction_type VARCHAR(255) NOT NULL,
+    max_transaction_amount BIGINT NOT NULL,
+    CONSTRAINT PK_sales_group PRIMARY KEY (id),
+    CONSTRAINT UQ_sales_group_name UNIQUE(name)
+);
+
+CREATE TABLE broker_sales_group(
+    broker_id BIGINT NOT NULL,
+    sales_group_id BIGINT NOT NULL,
+    CONSTRAINT FK_broker_sales_group_broker FOREIGN KEY (broker_id) REFERENCES broker,
+    CONSTRAINT FK_broker_sales_group_sales_group FOREIGN KEY (sales_group_id) REFERENCES sales_group,
+    CONSTRAINT PK_broker_sales_group PRIMARY KEY (broker_id, sales_group_id)
+);
+
+CREATE TABLE account(
+                        id BIGINT,
+                        email VARCHAR(255) NOT NULL,
+                        first_name VARCHAR(255) NOT NULL,
+                        last_name VARCHAR(255) NOT NULL,
+                        gender VARCHAR(255) NOT NULL,
+                        birthday DATE NOT NULL,
+                        balance DECIMAL(19, 4),
+                        creation_time TIMESTAMP default now() NOT NULL,
+                        CONSTRAINT account_pk PRIMARY KEY (id),
+                        CONSTRAINT account_email_uq UNIQUE (email)
+);

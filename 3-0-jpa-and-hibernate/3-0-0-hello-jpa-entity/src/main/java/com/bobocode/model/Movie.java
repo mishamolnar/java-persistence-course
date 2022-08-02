@@ -1,8 +1,9 @@
 package com.bobocode.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
+
+import javax.persistence.*;
 
 /**
  * TODO: you're job is to implement mapping for JPA entity {@link Movie}
@@ -14,12 +15,20 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
+@ToString
+@Table(name = "movie")
 public class Movie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "director", nullable = false)
     private String director;
 
+    @Column(name = "duration")
     private Integer durationSeconds;
 }
